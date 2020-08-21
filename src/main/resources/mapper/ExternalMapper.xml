@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.batch.dao.external.ExternalDao">
+<!--    <typeAlias alias="hmap" type="java.util.HashMap"/>-->
+<!--    <typeAlias alias="externalInfo" type="com.adgather.reportmodel.ExternalLinkageData"/>-->
+<!--    <typeAlias alias="rsInfo" type="com.mobon.report.domain.ReportStatsInfo"/>-->
+    <sql id="externalColums">
+        EXL_ITL_SEQ exlSeq
+        ,PAR_NO AS scriptNum
+        ,EXL_ITL_KEY AS zoneID
+        ,MEDIA_ID AS mediaID
+        ,EXL_ITL_ID AS externalID
+        ,EXL_ITL_MEDIA_NM AS externalName
+        ,SEND_TP_CODE AS sendCode
+        ,USE_YN AS useYN
+        ,EXL_ITL_MEMO AS memo
+        ,EXL_ITL_ADDITION AS addition
+        ,LIVE_DTTM AS liveDate
+        ,REG_USER_ID AS regUserID
+        ,REG_DTTM AS regDate
+        ,ALT_USER_ID AS altUserID
+        ,ALT_DTTM AS altDate
+    </sql>
+
+    <select id="selectExternalMatch" resultType="com.example.batch.dto.ExternalDto" parameterType="java.util.HashMap" >
+        SELECT
+            <include refid="externalColums"/>
+        FROM
+            EXL_ITL_INFO exl
+        JOIN media_script ms ON exl.PAR_NO = ms.no
+        WHERE
+            1=1
+        AND
+            SEND_TP_CODE = '02'
+        AND
+            EXL_ITL_ID = #{externalId}
+    </select>
+    <select id="selectTest" parameterType="String" resultType="String">
+        SELECT PAR_NO
+        FROM EXL_ITL_INFO
+        <if test="zoneid != ''">
+        WHERE EXL_ITL_KEY = #{zoneid}
+        </if>
+    </select>
+</mapper>

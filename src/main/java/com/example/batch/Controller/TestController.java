@@ -11,8 +11,8 @@ public class TestController {
     @Autowired
     TestSchedule testSchedule;
 
-    @Scheduled(fixedRate = 5000)
-    public void batch() {
-        testSchedule.reportBatch();
-    }
+//    @Scheduled(fixedRate = 5000)
+//    public void batch() {
+//        testSchedule.reportBatch();
+//    }
 }

@@ -16,8 +16,8 @@ public class TestSchedule {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
     @Autowired
-    public TestService testService;
-    public TestDto dto;
+    private TestService testService;
+    private TestDto dto;
 
     public void reportBatch() {
         log.info("The time is now {}", dateFormat.format(new Date()));
