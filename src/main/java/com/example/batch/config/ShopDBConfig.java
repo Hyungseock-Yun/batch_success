@@ -9,26 +9,23 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan(basePackages = "com.example.batch.dao.external", sqlSessionTemplateRef = "externalSessionTemplate")
-public class PrimaryDataSourceConfig {
+@MapperScan(basePackages = "com.example.batch.dao.shop", sqlSessionTemplateRef = "shopSessionTemplate")
+public class ShopDBConfig {
 
-  @Bean(name = "externalDataSource")
-  @ConfigurationProperties(prefix = "spring.datasource.externaldb")
-  @Primary
+  @Bean(name = "shopDataSource")
+  @ConfigurationProperties(prefix = "spring.datasource.shopdb")
   public DataSource externalDataSource() {
     return DataSourceBuilder.create().build();
   }
 
-  @Bean(name = "externalSessionFactory")
-  @Primary
-  public SqlSessionFactory externalSessionFactory(@Qualifier("externalDataSource") DataSource dataSource) throws Exception {
+  @Bean(name = "shopSessionFactory")
+  public SqlSessionFactory externalSessionFactory(@Qualifier("shopDataSource") DataSource dataSource) throws Exception {
     SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
     sqlSessionFactoryBean.setDataSource(dataSource);
     sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:/mapper/*.xml"));
@@ -36,15 +33,13 @@ public class PrimaryDataSourceConfig {
     return sqlSessionFactoryBean.getObject();
   }
 
-  @Bean(name = "externalTransactionManager")
-  @Primary
-  public DataSourceTransactionManager externalTransactionManager(@Qualifier("externalDataSource") DataSource dataSource) {
+  @Bean(name = "shopTransactionManager")
+  public DataSourceTransactionManager externalTransactionManager(@Qualifier("shopDataSource") DataSource dataSource) {
     return new DataSourceTransactionManager(dataSource);
   }
 
-  @Bean(name = "externalSessionTemplate")
-  @Primary
-  public SqlSessionTemplate externalSessionTemplate(@Qualifier("externalSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
+  @Bean(name = "shopSessionTemplate")
+  public SqlSessionTemplate externalSessionTemplate(@Qualifier("shopSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
     return new SqlSessionTemplate(sqlSessionFactory);
   }
 }

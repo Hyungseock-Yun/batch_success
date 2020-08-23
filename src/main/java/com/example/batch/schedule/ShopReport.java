@@ -13,7 +13,6 @@ public class ShopReport {
   @Autowired
   private ShopService shopService;
 
-  @Scheduled(fixedRate = 5000)
   public void start() {
     try {
       String url = shopService.selectUrl("ssumenam", "1000");
