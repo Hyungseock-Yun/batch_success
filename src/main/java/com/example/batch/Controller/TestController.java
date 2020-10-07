@@ -18,7 +18,7 @@ public class TestController {
 //        testSchedule.reportBatch();
     }
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 15000)
     public void adexinterBatch() {
         adexinterReport.start(param);
     }
