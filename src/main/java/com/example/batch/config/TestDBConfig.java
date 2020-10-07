@@ -28,13 +28,13 @@ public class TestDBConfig {
     public HikariConfig hikariConfig() { return new HikariConfig(); }
 
     @Bean(name = "testDataSource")
-//    @Primary
+    @Primary
     public DataSource dataSource() {
         return new HikariDataSource(hikariConfig());
     }
 
     @Bean(name = "testSessionFactory")
-//    @Primary
+    @Primary
     public SqlSessionFactory externalSessionFactory(@Qualifier("testDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
@@ -44,13 +44,13 @@ public class TestDBConfig {
     }
 
     @Bean(name = "testTransactionManager")
-//    @Primary
+    @Primary
     public DataSourceTransactionManager externalTransactionManager(@Qualifier("testDataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
     @Bean(name = "testSessionTemplate")
-//    @Primary
+    @Primary
     public SqlSessionTemplate externalSessionTemplate(@Qualifier("testSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
         return new SqlSessionTemplate(sqlSessionFactory);
     }

@@ -5,7 +5,7 @@
 <!--    <typeAlias alias="externalInfo" type="com.adgather.reportmodel.ExternalLinkageData"/>-->
 <!--    <typeAlias alias="rsInfo" type="com.mobon.report.domain.ReportStatsInfo"/>-->
     <sql id="externalColums">
-        EXL_ITL_SEQ exlSeq
+        EXL_ITL_SEQ AS exlSeq
         ,PAR_NO AS scriptNum
         ,EXL_ITL_KEY AS zoneID
         ,MEDIA_ID AS mediaID

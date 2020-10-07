@@ -21,14 +21,11 @@ import javax.sql.DataSource;
 @MapperScan(basePackages = "com.example.batch.dao.external", sqlSessionTemplateRef = "externalSessionTemplate")
 public class ExternalDBConfig {
 
-  @Bean
-  @ConfigurationProperties(prefix = "spring.datasource.externaldb")
-  public HikariConfig hikariConfig() { return new HikariConfig(); }
-
   @Bean(name = "externalDataSource")
-//  @Primary
-  public DataSource dataSource() {
-    return new HikariDataSource(hikariConfig());
+  //  @Primary
+  @ConfigurationProperties(prefix = "spring.datasource.externaldb")
+  public DataSource externalDataSource() {
+    return DataSourceBuilder.create().build();
   }
 
   @Bean(name = "externalSessionFactory")
